@@ -2,11 +2,75 @@
 import { Facebook, Github, Linkedin, Twitter } from "lucide-react";
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react";
+import { FormEvent, useState } from "react";
+
+// Typing for error handling
+class HttpError extends Error {
+    constructor(status: number, message: string) {
+        super(message);
+        this.name = 'HttpError';
+        this.status = status;
+    }
+
+    status: number;
+}
 
 const Email = () => {
     const [emailSubmitted, setEmailSubmitted] = useState(false);
-    const handleSubmit = () => { }
+
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        // static typing for e.target
+        const target = e.target as typeof e.target & {
+            email: { value: string };
+            name: {value: string};
+            subject: { value: string };
+            message: { value: string };
+        };
+
+        const data = {
+            email: target.email.value,
+            name: target.name.value,
+            subject: target.subject.value,
+            message: target.message.value,
+        };
+
+        try {
+            const req = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}api/send`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+            console.log(process.env.NEXT_PUBLIC_BASE_URL)
+
+            if (!req.ok) {
+                throw new Error(`HTTP error! Status: ${req.status}`);
+            }
+
+            const response = await req.json();
+            setEmailSubmitted(true);
+            
+        } catch (error) {
+            if (error instanceof HttpError) {
+                console.error(`HTTP error! Status: ${error.status}, Message: ${error.message}`);
+            } else {
+                console.error('An unexpected error occurred:', (error as any).message);
+            }
+        }
+
+
+
+        // clear the form after submission
+        target.email.value = '';
+        target.subject.value = '';
+        target.message.value = '';
+
+
+        
+    };
     return (
         <section
             id="contact"
@@ -24,11 +88,11 @@ const Email = () => {
                     try my best to get back to you!
                 </p>
                 <div className='flex mt-5 gap-x-3 md:gap-x-4'>
-              <div className='bg-gray-600 rounded-lg p-1'><Linkedin className='h-5 w-5  md:h-6 md:w-6' /></div>
-              <div className='bg-gray-600 rounded-lg p-1'><Github className='h-5 w-5  md:h-6 md:w-6' /></div>
-              <div className='bg-gray-600 rounded-lg p-1'><Facebook className='h-5 w-5  md:h-6 md:w-6' /></div>
-              <div className='bg-gray-600 rounded-lg p-1'><Twitter className='h-5 w-5  md:h-6 md:w-6' /></div>
-            </div>
+                    <div className='bg-gray-600 rounded-lg p-1'><Linkedin className='h-5 w-5  md:h-6 md:w-6' /></div>
+                    <div className='bg-gray-600 rounded-lg p-1'><Github className='h-5 w-5  md:h-6 md:w-6' /></div>
+                    <div className='bg-gray-600 rounded-lg p-1'><Facebook className='h-5 w-5  md:h-6 md:w-6' /></div>
+                    <div className='bg-gray-600 rounded-lg p-1'><Twitter className='h-5 w-5  md:h-6 md:w-6' /></div>
+                </div>
             </div>
             <div>
                 {emailSubmitted ? (
@@ -50,7 +114,23 @@ const Email = () => {
                                 id="email"
                                 required
                                 className="bg-[#18191E] border border-[#33353F] placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5"
-                                placeholder="jacob@google.com"
+                                placeholder="abc@xyz.com"
+                            />
+                        </div>
+                        <div className="mb-6">
+                            <label
+                                htmlFor="name"
+                                className="text-white block mb-2 text-sm font-medium"
+                            >
+                                Your Name
+                            </label>
+                            <input
+                                name="name"
+                                type="text"
+                                id="name"
+                                required
+                                className="bg-[#18191E] border border-[#33353F] placeholder-[#9CA2A9] text-gray-100 text-sm rounded-lg block w-full p-2.5"
+                                placeholder="Ex: Jacob"
                             />
                         </div>
                         <div className="mb-6">
