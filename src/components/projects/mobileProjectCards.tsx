@@ -16,8 +16,9 @@ const MobileProjectCard = () => {
             <div className='grid grid-cols-[10%,80%,10%]  md:hidden justify-center items-center '>
 
 
-                <button className='p-0.5  mx-auto bg-gray-500 rounded-full '>
-                    {  previousAvailable && <ArrowLeft                   
+                <button className='  mx-auto bg-gray-500 rounded-full '>
+                    {previousAvailable && <ArrowLeft
+                        className='m-0.5'
                         onClick={() => setIndex(index - 1)} size={20}
                     />}
                 </button>
@@ -34,8 +35,9 @@ const MobileProjectCard = () => {
 
                 </div>
 
-                <button className=' p-0.5 mx-auto bg-gray-500 rounded-full  '>
-                    { nextAvailable &&  <ArrowRight
+                <button className=' mx-auto bg-gray-500 rounded-full  '>
+                    {nextAvailable && <ArrowRight
+                        className='m-0.5'
                         onClick={() => setIndex(index + 1)} size={20}
                     />}
                 </button>

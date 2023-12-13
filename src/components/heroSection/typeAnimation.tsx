@@ -3,7 +3,7 @@ import { TypeAnimation as TypeAnimationText } from "react-type-animation"
 
 const TypeAnimation = () => {
     return (
-        <div className="min-h-[90px] xs:min-h-[60px] min-w-full">
+        <div className="min-h-[90px] xs:min-h-[60px] lg:min-h-[120px] xl:min-h-[60px] min-w-full">
             <TypeAnimationText
                 sequence={[
                     "Zaka Urrehman",
