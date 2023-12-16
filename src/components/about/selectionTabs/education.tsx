@@ -1,9 +1,10 @@
-import { education } from "@/data"
-const Education = () => {
+
+
+const Education = ({education}:any) => {
     
     return (
         <div className="mt-4 text-sm sm:text-lg">
-            {education.map((edu, index) => (
+            {education.map((edu:any, index:number) => (
                 <div key={index} className="my-2">
                     <div className="flex items-center font-bold text-gray-200 xs:text-lg md:text-xl lg:text-2xl ">
                         <div className="w-2 h-2 bg-white rounded-full mr-4 " />

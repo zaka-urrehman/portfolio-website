@@ -12,11 +12,12 @@ interface Props {
     previewUrl: string
 }
 const ProjectCard = ({ imgUrl, title, description, gitUrl, previewUrl, techStack }: Props) => {
+    // console.log(title)
     return (
         <div className="w-60 xs:w-68 md:w-[350px] ">
             <div
                 className="h-36  md:h-52 rounded-t-xl relative group"
-                style={{ background: `url(${imgUrl})`, backgroundSize: "cover" }}
+                style={{ background: `url(${imgUrl})`, backgroundSize: "cover" ,  backgroundPosition: "center" }}
             >
                 <div className="overlay items-center justify-center absolute top-0 left-0 w-full h-full bg-[#181818] hidden group-hover:flex  bg-opacity-0 group-hover:bg-opacity-80 transition-all duration-700   ">
                     <Link

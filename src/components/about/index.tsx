@@ -1,8 +1,29 @@
-'use client'
+
 import Image from 'next/image'
 import SelectionTabs from './selectionTabs'
+import { fetchCertifications, fetchEducation , fetchSkills } from '@/data'
 
-const About = () => {
+// const fetchData = async(option:string) => {
+//     if (option === 'certifications'){
+//         const certificates = await fetchCertifications()
+//         return certificates
+//     } else if (option === 'education'){
+//         const education = await fetchEducation()
+//         return education
+//     } else if (option === 'skills'){
+//         const skills = await fetchSkills()
+//         return skills
+//     }
+// }
+
+const About = async() => {
+
+
+    const certifications = await fetchCertifications()
+    const education = await fetchEducation()
+    const skills = await fetchSkills()
+
+    
     return (
         
         <section className='text-white my-8 lg:my-20'>
@@ -21,7 +42,7 @@ const About = () => {
                     
                 </div>
             </div>
-            <SelectionTabs />
+            <SelectionTabs  certifications={certifications} education={education} skills={skills[0].skills}/>
         </section>
 
     )

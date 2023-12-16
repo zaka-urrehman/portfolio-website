@@ -16,13 +16,14 @@ interface DisplayOptions {
     "Certifications": JSX.Element
 }
 
-const SelectionTabs = () => {
+const SelectionTabs = ({certifications , education, skills}:any) => {
+    
     const [isPending, startTransition] = useTransition()
     const tabOptions = ["My Skills", "Education", "Certifications"]
     const displayOptions : DisplayOptions = {
-        "My Skills": <MySkills />,
-        "Education": <Education />,
-        "Certifications": <Certifications />
+        "My Skills": <MySkills skills={skills} />,
+        "Education": <Education education={education} />,
+        "Certifications": <Certifications  certifications={certifications}/>
     }
    
     const [active, setActive] = useState<keyof DisplayOptions>("My Skills")
